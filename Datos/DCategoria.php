@@ -1,21 +1,33 @@
 <?php
-namespace Datos;
-use Datos\Conexion;
 
-include("DConexion.php");
-class DCategoria {
+namespace Datos;
+
+use Conexion;
+
+include("DB/Conexion.php");
+class DCategoria
+{
+    private $conexion;
     /* Declarando variables */
     private $idCategoria;
     private $nombre;
 
-
-    private function sql($query){
-        $obj =new Conexion();
-        return $obj->Consulta($query);
+    public function __construct()
+    {
+        $this->conexion = new Conexion;
     }
 
-    public function listar(){
-        $query="select * from categoria";
-        return $this->sql($query);
+    public function listar()
+    {
+        $obj = $this->conexion->connect();
+        if ($obj) {
+            $query = "select * from categoria";
+            $resultado = $this->conexion->Consulta($query);
+            $this->conexion->close();
+            return $resultado;
+        } else {
+            $this->conexion->close();
+            echo "Error de conexion de DB en DCategoria";
+        }
     }
 }
