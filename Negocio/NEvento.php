@@ -59,4 +59,7 @@ class NEvento
     {
         return $this->devento->DObtenerUltimoEvento();
     }
+
+
+   
 }

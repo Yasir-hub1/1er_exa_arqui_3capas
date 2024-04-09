@@ -51,4 +51,10 @@ class NInvitado
     public function NActualizarInvitado($id_invitado,$nombre,$correo,$telefono){
         return $this->dinvitado->DActualizarInvitado($id_invitado,$nombre,$correo,$telefono);
     }
+
+    public function NActualizarEstadoDeConfirmacion($id_invitado,$estadoEvento){
+       
+        return $this->dinvitado->DActualizarEstadoDeConfirmacion($id_invitado,$estadoEvento);
+
+    }
 }

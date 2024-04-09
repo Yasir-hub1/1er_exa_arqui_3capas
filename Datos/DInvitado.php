@@ -156,5 +156,25 @@ class DInvitado
             return "Hubo un error al conectar con la base de datos";
         }
     }
+
+
+    public function DActualizarEstadoDeConfirmacion($id_invitado, $estadoEvento) {
+       
+        $conexion = $this->conexion->connect();
+        if ($conexion) {
+            try {
+                $query = "UPDATE invitado SET estado = ? WHERE id = ?";
+                $params = [$estadoEvento, $id_invitado];
+                $stmt = $conexion->prepare($query); // Preparar la consulta
+                $stmt->execute($params); // Ejecutar la consulta con los parámetros
+                $stmt->closeCursor();
+                return "Estado del invitado actualizado";
+            } catch (\PDOException $e) {
+                return "Error al actualizar el estado del evento: " . $e->getMessage();
+            }
+        } else {
+            return "Hubo un error al conectar con la base de datos";
+        }
+    }
     
 }

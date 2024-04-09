@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Lógica para el formulario de cierre de Invitado
             $id_invitado = $_POST["id_invitado"];
             $PInvitado->NEliminarInvitado($id_invitado);
-            header("Location:  /");
-            exit; // Importante: detener la ejecución del script después de la redirección
+            /* header("Location:  /");
+            exit; */ // Importante: detener la ejecución del script después de la redirección
             break;
         case "buscarInvitado":
             //    echo ("<div>hola</div>");
@@ -79,10 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $id_invitado = $_POST["id_invitado"];
             $nombreInvitado = $_POST["nombreInvitado"];
             $telefonoInvitado = $_POST["telefonoInvitado"];
-            $codigoInvitado = $_POST["codigoInvitado"];
+            
 
             // Generar el enlace de WhatsApp con el mensaje
-            $mensaje_whatsapp = "Hola $nombreInvitado, te estoy invitando al evento, te adjunto el link de invitación http://gestioneventos.test:84/Presentacion/PQr.php/$codigoInvitado. ¿Estás disponible?";
+            $mensaje_whatsapp = "Hola $nombreInvitado, te estoy invitando al evento, te adjunto el link de invitación http://gestioneventos.test:84/Presentacion/PQr.php/$id_invitado. ¿Estás disponible?";
             $enlace_whatsapp = "https://api.whatsapp.com/send?phone=$telefonoInvitado&text=" . urlencode($mensaje_whatsapp);
             // Redirigir al usuario al enlace de WhatsApp
             echo "<script>window.open('$enlace_whatsapp', '_blank');</script>";
