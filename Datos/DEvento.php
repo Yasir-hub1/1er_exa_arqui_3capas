@@ -2,20 +2,14 @@
 
 namespace Datos;
 
-use Conexion;
+use DB\Conexion;
 use PDO;
 use PDOException;
 
-include("DB/Conexion.php");
+
 class DEvento
 {
 
-
-    private $id;
-    private $nombre;
-    private $fecha;
-    private $ubicacion;
-    private $descripcion;
     private $conexion;
     public function __construct()
     {
@@ -121,7 +115,6 @@ class DEvento
             $resultado = $this->conexion->consultarBD($query);
             $this->conexion->close();
             return $resultado;
-            
         } else {
             $this->conexion->close();
             return "Hubo un error al obtener los Evento";
@@ -136,14 +129,14 @@ class DEvento
                 // Preparar la consulta SQL
                 $query = "DELETE FROM evento WHERE id = :id";
                 $stmt = $conexion->prepare($query);
-    
+
                 // Vincular el parámetro ID
                 $stmt->bindParam(':id', $id_evento, PDO::PARAM_INT);
-    
+
                 // Ejecutar la consulta
                 $stmt->execute();
                 $this->conexion->close();
-               return;
+                return;
             } catch (PDOException $e) {
                 // Manejar errores de la consulta SQL
                 return "Error al ejecutar la consulta: " . $e->getMessage();
@@ -153,10 +146,22 @@ class DEvento
             return "Hubo un error al cerrar la conexión";
         }
     }
+
+
+    public function DObtenerUltimoEvento()
+    {
+        $conexion = $this->conexion->connect();
+        if ($conexion) {
+            $query = "SELECT id, estado FROM evento ORDER BY id DESC LIMIT 1";
+            $stmt = $conexion->prepare($query);
+            $stmt->execute();
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->conexion->close();
+            return $resultado;
+        } else {
+            $this->conexion->close();
+            return "Hubo un error al obtener el último ID de evento";
+        }
+    }
     
-
-
-
-
-
 }

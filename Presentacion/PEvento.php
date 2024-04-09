@@ -72,163 +72,167 @@ $PlistarEventos = $PEvento->NlistarEventos();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Evento</title>
+    <title>Gestion de Evento</title>
 </head>
 
 <body>
-    <div style="justify-content: center;align-self: center;">
-        <h1 style="text-align: center;">GESTION DE EVENTOS</h1>
+    <section>
 
-    </div>
-    <div style="display: flex;">
-        <!-- FORMULARIO DE REGISTRO -->
-        <?php
-        if ($PobtenerEvento !== null) {
-            $hayEvento = true;
-            echo '<div>
-            <div style="margin-left: 20px;display: flex;">
-                <h4>Evento:' . $PobtenerEvento['nombre'] . '</h4>
-                
-               
-                <div style="padding-left:10px">
-                  <h4>Fecha y hora : ' . $PobtenerEvento['fecha'] . '</h4>
-                </div>
+        <div style="justify-content: center;align-self: center;">
+            <h1 style="text-align: center;">GESTION DE EVENTOS</h1>
 
-                <div style="padding-left:10px">
-                  <h4>Estado : ' . $PobtenerEvento['estado'] . '</h4>
-                </div>
-                <br>
-                
-                <!-- BOTON DE CERRAR EVENTO  -->
-
-                <div style="padding-left:10px;">
-                <form method="POST">
-                <input type="hidden" name="accion" value="cerrarEvento">
-                <input type="hidden" id="id_evento" name="id_evento" value="' . $PobtenerEvento['id'] . '">
-                <input type="hidden" id="nombre" name="nombre" value="' . $PobtenerEvento['nombre'] . '">
-                <input type="hidden" id="fecha" name="fecha" value="' . $PobtenerEvento['fecha'] . '">
-                <input type="hidden" id="ubicacion" name="ubicacion" value="' . $PobtenerEvento['ubicacion'] . '">
-                <input type="hidden" id="descripcion" name="descripcion" value="' . $PobtenerEvento['descripcion'] . '"><br>
-                 <button type="submit">Cerrar evento</button>
-                 </form>
-                </div>  
-                </div> 
-               <div style="padding-left:10px;margin-top:-30px">
-               <h4>Descripcion: ' . $PobtenerEvento['descripcion'] . '</h4>
-               </div>
-
-               
-                <!-- FORMULARIO DE EDITAR INFORMACION DE EVENTO  -->
-
-<div style="padding-left:10px;">
-    <div style="border-radius: 10px; border: 2px solid #000; padding: 20px;width:250px ">
-
-    <h2 style="text-align: center;">Editar informacion  del Evento</h2>
-
-            <form method="POST">
-
-                <input type="hidden" name="accion" value="editarEvento">
-
-                <input type="hidden" id="id_evento" name="id_evento" value="' . $PobtenerEvento['id'] . '">
-                    <label for="nombre">Nombre:</label><br>
-                    <input type="text" id="nombre" name="nombre"  placeholder="' . $PobtenerEvento['nombre'] . '" ><br>
-                    <label for="fecha">Fecha y hora:</label><br>
-                    <input type="datetime-local" id="fecha" name="fecha" placeholder="' . $PobtenerEvento['fecha'] . '"><br>
-                    <label for="ubicacion">Ubicación:</label><br>
-                    <input type="text" id="ubicacion" name="ubicacion" placeholder="' . $PobtenerEvento['ubicacion'] . '"><br>
-                    <label for="descripcion">Descripción:</label><br>
-                    <input type="text" id="descripcion" name="descripcion"  placeholder="' . $PobtenerEvento['descripcion'] . '"><br><br>
-
-                    <button type="submit">Actualizar evento</button>
-
-                </form>
-            </div>
-            </div>
-
-                
-            </div>';
-        } else {
-
-            echo '<div style="flex-direction: row; display: flex;">
-          
-                    <div style="border-radius: 10px; border: 2px solid #000; padding: 20px; margin-left: 20px;">
-                        <h2>Registro de Evento</h2>
-                        <form method="POST">
-                        <input type="hidden" name="accion" value="registrarEvento">
-                            <label for="nombre">Nombre:</label><br>
-                            <input type="text" id="nombre" name="nombre"><br>
-                            <label for="fecha">Fecha y hora:</label><br>
-                            <input type="datetime-local" id="fecha" name="fecha"><br>
-                            <label for="ubicacion">Ubicación:</label><br>
-                            <input type="text" id="ubicacion" name="ubicacion"><br>
-                            <label for="descripcion">Descripción:</label><br>
-                            <input type="text" id="descripcion" name="descripcion"><br><br>
-                            <input type="submit" value="Registrar">
-                        </form>
-                    </div>';
-        }
-
-
-
-
-
-        ?>
-        <?php
-        if ($PobtenerEvento == null) {
-
-            echo '  <div style="margin-left: 20px;">
-                <h2>Lista de eventos</h2>
+        </div>
+        <div style="display: flex;">
+            <!-- FORMULARIO DE REGISTRO -->
+            <?php
+            if ($PobtenerEvento !== null) {
+                $hayEvento = true;
+                echo '<div>
+                <div style="margin-left: 20px;display: flex;">
+                    <h4>Evento:' . $PobtenerEvento['nombre'] . '</h4>
+                    
+                   
+                    <div style="padding-left:10px">
+                      <h4>Fecha y hora : ' . $PobtenerEvento['fecha'] . '</h4>
+                    </div>
     
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Nombre </th>
-                            <th>Fecha </th>
-                            <th>Ubicacion </th>
-                            <th>Descripcion </th>
-                            <th>Estado </th>
-
-                            <th>Opciones </th>
-                        </tr>
-                    </thead>
-                    <tbody>';
-            if (is_object($PlistarEventos)) {
-                while ($evento = $PlistarEventos->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>" . $evento['nombre'] . "</td>";
-                    echo "<td>" . $evento['fecha'] . "</td>";
-                    echo "<td>" . $evento['ubicacion'] . "</td>";
-                    echo "<td>" . $evento['descripcion'] . "</td>";
-                    echo "<td>" . $evento['estado'] . "</td>";
-                    echo ' <form method="POST">
-                            <input type="hidden" name="accion" value="eliminarEvento">';
-                    echo '<td>  <input type="hidden" name="id_evento" value="' . $evento['id'] . '"
+                    <div style="padding-left:10px">
+                      <h4>Estado : ' . $PobtenerEvento['estado'] . '</h4>
+                    </div>
                     <br>
-                               <input type="submit" value="eliminar">
-                          </td>';
-                    echo ' </form>';
-                    echo "</tr>";
-                }
+                    
+                    <!-- BOTON DE CERRAR EVENTO  -->
+    
+                    <div style="padding-left:10px;">
+                    <form method="POST">
+                    <input type="hidden" name="accion" value="cerrarEvento">
+                    <input type="hidden" id="id_evento" name="id_evento" value="' . $PobtenerEvento['id'] . '">
+                    <input type="hidden" id="nombre" name="nombre" value="' . $PobtenerEvento['nombre'] . '">
+                    <input type="hidden" id="fecha" name="fecha" value="' . $PobtenerEvento['fecha'] . '">
+                    <input type="hidden" id="ubicacion" name="ubicacion" value="' . $PobtenerEvento['ubicacion'] . '">
+                    <input type="hidden" id="descripcion" name="descripcion" value="' . $PobtenerEvento['descripcion'] . '"><br>
+                     <button type="submit">Cerrar evento</button>
+                     </form>
+                    </div>  
+                    </div> 
+                   <div style="padding-left:10px;margin-top:-30px">
+                   <h4>Descripcion: ' . $PobtenerEvento['descripcion'] . '</h4>
+                   </div>
+    
+                   
+                    <!-- FORMULARIO DE EDITAR INFORMACION DE EVENTO  -->
+    
+    <div style="padding-left:10px;">
+        <div style="border-radius: 10px; border: 2px solid #000; padding: 20px;width:250px ">
+    
+        <h2 style="text-align: center;">Editar informacion  del Evento</h2>
+    
+                <form method="POST">
+    
+                    <input type="hidden" name="accion" value="editarEvento">
+    
+                    <input type="hidden" id="id_evento" name="id_evento" value="' . $PobtenerEvento['id'] . '">
+                        <label for="nombre">Nombre:</label><br>
+                        <input type="text" id="nombre" name="nombre"  placeholder="' . $PobtenerEvento['nombre'] . '" ><br>
+                        <label for="fecha">Fecha y hora:</label><br>
+                        <input type="datetime-local" id="fecha" name="fecha" placeholder="' . $PobtenerEvento['fecha'] . '"><br>
+                        <label for="ubicacion">Ubicación:</label><br>
+                        <input type="text" id="ubicacion" name="ubicacion" placeholder="' . $PobtenerEvento['ubicacion'] . '"><br>
+                        <label for="descripcion">Descripción:</label><br>
+                        <input type="text" id="descripcion" name="descripcion"  placeholder="' . $PobtenerEvento['descripcion'] . '"><br><br>
+    
+                        <button type="submit">Actualizar evento</button>
+    
+                    </form>
+                </div>
+                </div>
+    
+                    
+                </div>';
             } else {
-                echo "<tr><td colspan='4'>No hay eventos disponibles</td></tr>";
+
+                echo '<div style="flex-direction: row; display: flex;">
+              
+                        <div style="border-radius: 10px; border: 2px solid #000; padding: 20px; margin-left: 20px;">
+                            <h2>Registro de Evento</h2>
+                            <form method="POST">
+                            <input type="hidden" name="accion" value="registrarEvento">
+                                <label for="nombre">Nombre:</label><br>
+                                <input type="text" id="nombre" name="nombre"><br>
+                                <label for="fecha">Fecha y hora:</label><br>
+                                <input type="datetime-local" id="fecha" name="fecha"><br>
+                                <label for="ubicacion">Ubicación:</label><br>
+                                <input type="text" id="ubicacion" name="ubicacion"><br>
+                                <label for="descripcion">Descripción:</label><br>
+                                <input type="text" id="descripcion" name="descripcion"><br><br>
+                                <input type="submit" value="Registrar">
+                            </form>
+                        </div>';
             }
 
 
 
 
-            echo '  </tbody>
-                </table>
-            </div>
-            </div>';
-        }
 
-        ?>
-        <!-- VISTA DONDE MUESTRA LOS DATOS DEL EVENTO DISPONIBLE  -->
+            ?>
+            <?php
+            if ($PobtenerEvento == null) {
+
+                echo '  <div style="margin-left: 20px;">
+                    <h2>Lista de eventos</h2>
+        
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Nombre </th>
+                                <th>Fecha </th>
+                                <th>Ubicacion </th>
+                                <th>Descripcion </th>
+                                <th>Estado </th>
+    
+                                <th>Opciones </th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+                if (is_object($PlistarEventos)) {
+                    while ($evento = $PlistarEventos->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td>" . $evento['nombre'] . "</td>";
+                        echo "<td>" . $evento['fecha'] . "</td>";
+                        echo "<td>" . $evento['ubicacion'] . "</td>";
+                        echo "<td>" . $evento['descripcion'] . "</td>";
+                        echo "<td>" . $evento['estado'] . "</td>";
+                        echo ' <form method="POST">
+                                <input type="hidden" name="accion" value="eliminarEvento">';
+                        echo '<td>  <input type="hidden" name="id_evento" value="' . $evento['id'] . '"
+                        <br>
+                                   <input type="submit" value="eliminar">
+                              </td>';
+                        echo ' </form>';
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No hay eventos disponibles</td></tr>";
+                }
 
 
 
 
-    </div>
+                echo '  </tbody>
+                    </table>
+                </div>
+                </div>';
+            }
+
+            ?>
+            <!-- VISTA DONDE MUESTRA LOS DATOS DEL EVENTO DISPONIBLE  -->
+
+
+
+
+        </div>
+
+    </section>
 </body>
 
 

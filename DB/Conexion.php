@@ -1,5 +1,5 @@
 <?php
-
+namespace DB;
 class Conexion
 {
 
